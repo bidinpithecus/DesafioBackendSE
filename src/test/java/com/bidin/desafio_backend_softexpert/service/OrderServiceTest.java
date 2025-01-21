@@ -7,12 +7,16 @@ import com.bidin.desafio_backend_softexpert.model.CostType;
 import com.bidin.desafio_backend_softexpert.model.Discount;
 import com.bidin.desafio_backend_softexpert.model.Item;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class OrderServiceTest {
+    @Autowired
     private final OrderService orderService = new OrderService();
 
     @Test
