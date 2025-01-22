@@ -2,7 +2,7 @@ package com.bidin.desafio_backend_softexpert.payment;
 
 public enum PaymentProviderType {
     MERCADOPAGO,
-    PICPAY;
+    ITAU;
 
     public static PaymentProviderType fromString(String value) {
         try {

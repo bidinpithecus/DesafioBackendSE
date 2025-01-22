@@ -1,36 +1,37 @@
 package com.bidin.desafio_backend_softexpert.controller;
 
-import com.bidin.desafio_backend_softexpert.dto.OrderResponseDTO;
+import com.bidin.desafio_backend_softexpert.dto.PaymentRequestDTO;
 import com.bidin.desafio_backend_softexpert.service.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
 public class PaymentController {
-    private final PaymentService paymentService;
+    @Autowired
+    private PaymentService paymentService;
 
-    public PaymentController(PaymentService paymentService) {
-        this.paymentService = paymentService;
-    }
-
-    @GetMapping("/generate-links")
-    public ResponseEntity<List<String>> generateLinks(@RequestBody OrderResponseDTO request) {
+    @PostMapping("/generate-links")
+    public ResponseEntity<Map<String, List<String>>> generateLinks(@RequestBody PaymentRequestDTO request) {
         try {
-            List<String> paymentLinks = new ArrayList<>();
+            Map<String, List<String>> shares = new HashMap<>();
 
-            request.getShares().forEach((name, value) -> paymentLinks.add(paymentService.generateLink("Sua fatia", new BigDecimal(value), name)));
+            request.getShares().forEach((name, value) -> {
+                if (!name.equals(request.getOwnerName())) {
+                    shares.put(name, paymentService.generateLink("Sua fatia", new BigDecimal(value), request.getOwnerPixKey()));
+                }
+            });
 
-            return new ResponseEntity<>(paymentLinks, HttpStatus.OK);
+            return new ResponseEntity<>(shares, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

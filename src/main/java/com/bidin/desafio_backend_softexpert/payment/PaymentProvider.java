@@ -1,7 +1,8 @@
 package com.bidin.desafio_backend_softexpert.payment;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public interface PaymentProvider {
-    String generateLink(String description, BigDecimal amount, String payerEmail);
+    List<String> generateLink(String description, BigDecimal amount, String payerInfo);
 }
