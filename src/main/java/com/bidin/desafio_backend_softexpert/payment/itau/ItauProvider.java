@@ -1,14 +1,14 @@
-package com.bidin.desafio_backend_softexpert.payment;
+package com.bidin.desafio_backend_softexpert.payment.itau;
 
+import com.bidin.desafio_backend_softexpert.payment.PaymentProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 
 import org.springframework.web.client.RestTemplate;
+import org.yaml.snakeyaml.util.Tuple;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ItauProvider implements PaymentProvider {
@@ -24,7 +24,7 @@ public class ItauProvider implements PaymentProvider {
     }
 
     @Override
-    public List<String> generateLink(String _description, BigDecimal amount, String pixKey) {
+    public Tuple<String, String> generateLink(String _description, BigDecimal amount, String pixKey) {
         try {
             Map<String, Object> requestBody;
             requestBody = new HashMap<>();
@@ -64,11 +64,7 @@ public class ItauProvider implements PaymentProvider {
                     var getResponseBody = getResponse.getBody();
                     assert getResponseBody != null;
 
-                    List<String> response = new ArrayList<>(2);
-                    response.add(getResponseBody.get("pix_link").toString());
-                    response.add(getResponseBody.get("imagem_base64").toString());
-
-                    return response;
+                    return new Tuple<>(getResponseBody.get("pix_link").toString(), getResponseBody.get("imagem_base64").toString());
                 } else {
                     throw new RuntimeException("Falha ao gerar qrcode: " + postResponse.getStatusCode());
                 }

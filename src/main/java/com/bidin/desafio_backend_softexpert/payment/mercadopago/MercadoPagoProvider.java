@@ -1,9 +1,11 @@
-package com.bidin.desafio_backend_softexpert.payment;
+package com.bidin.desafio_backend_softexpert.payment.mercadopago;
 
+import com.bidin.desafio_backend_softexpert.payment.PaymentProvider;
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.preference.*;
 import com.mercadopago.resources.preference.Preference;
 import org.springframework.beans.factory.annotation.Value;
+import org.yaml.snakeyaml.util.Tuple;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ public class MercadoPagoProvider implements PaymentProvider {
     }
 
     @Override
-    public List<String> generateLink(String description, BigDecimal amount, String name) {
+    public Tuple<String, String> generateLink(String description, BigDecimal amount, String name) {
         try {
             PreferenceClient client = new PreferenceClient();
 
@@ -39,10 +41,8 @@ public class MercadoPagoProvider implements PaymentProvider {
                     .build();
 
             Preference preference = client.create(preferenceRequest);
-            List<String> response = new ArrayList<>(1);
-            response.add(preference.getSandboxInitPoint());
 
-            return response;
+            return new Tuple<>(preference.getSandboxInitPoint(), "");
         } catch (Exception e) {
             throw new RuntimeException("Falha ao criar pagamento via Mercado Pago", e);
         }

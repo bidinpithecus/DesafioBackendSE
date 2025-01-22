@@ -1,5 +1,8 @@
 package com.bidin.desafio_backend_softexpert.payment;
 
+import com.bidin.desafio_backend_softexpert.payment.itau.ItauProvider;
+import com.bidin.desafio_backend_softexpert.payment.itau.ItauTokenManager;
+import com.bidin.desafio_backend_softexpert.payment.mercadopago.MercadoPagoProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
