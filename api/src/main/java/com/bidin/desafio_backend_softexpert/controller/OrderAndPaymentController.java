@@ -1,6 +1,7 @@
 package com.bidin.desafio_backend_softexpert.controller;
 
 import com.bidin.desafio_backend_softexpert.dto.*;
+import com.bidin.desafio_backend_softexpert.model.Discount;
 import com.bidin.desafio_backend_softexpert.service.OrderService;
 import com.bidin.desafio_backend_softexpert.service.PaymentService;
 import jakarta.validation.Valid;
@@ -29,6 +30,11 @@ public class OrderAndPaymentController {
         @Valid @RequestBody OrderAndPaymentRequestDTO request
     ) {
         try {
+            for (Discount discount : request.getDiscounts()) {
+                System.out.println(
+                    discount.getType().toString() + "; " + discount.getAmount()
+                );
+            }
             PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO(
                 orderService
                     .split(

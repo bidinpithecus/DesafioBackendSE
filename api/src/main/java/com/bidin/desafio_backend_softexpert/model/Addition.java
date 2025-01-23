@@ -1,8 +1,14 @@
 package com.bidin.desafio_backend_softexpert.model;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 public class Addition {
 
+    @NotNull(message = "Tipo do adicional não pode ser vazio")
     private CostType type;
+
+    @Positive(message = "Valor do adicional tem que ser positivo não nulo")
     private double amount;
 
     public Addition(CostType type, double amount) {

@@ -19,11 +19,11 @@ public class OrderAndPaymentRequestDTO {
 
     @NotNull(message = "Descontos não pode ser vazio")
     @NotEmpty(message = "Descontos não pode ser vazio")
-    private final List<Discount> discounts;
+    private final List<@Valid Discount> discounts;
 
     @NotNull(message = "Adicionais não pode ser vazio")
     @NotEmpty(message = "Adicionais não pode ser vazio")
-    private final List<Addition> additions;
+    private final List<@Valid Addition> additions;
 
     @NotNull(message = "Nome do proprietário não pode ser vazio")
     @NotBlank(message = "Nome do proprietário não pode ser em vazio")

@@ -19,11 +19,11 @@ public class OrderRequestDTO {
 
     @NotNull(message = "Itens não pode ser vazio")
     @NotEmpty(message = "Itens não pode ser vazio")
-    private final List<Discount> discounts;
+    private final List<@Valid Discount> discounts;
 
     @NotNull(message = "Itens não pode ser vazio")
     @NotEmpty(message = "Itens não pode ser vazio")
-    private final List<Addition> additions;
+    private final List<@Valid Addition> additions;
 
     public OrderRequestDTO(
         Map<String, List<Item>> items,
