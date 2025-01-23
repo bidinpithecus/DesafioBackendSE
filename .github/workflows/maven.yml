@@ -1,0 +1,39 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "openjdk"
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        working-directory: ./api
+        run: mvn clean install -DskipTests=false
+
+      - name: Run tests with Maven
+        working-directory: ./api
+        run: mvn test
