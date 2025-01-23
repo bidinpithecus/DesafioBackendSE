@@ -1,5 +1,15 @@
-
 # Desafio Java Back-end - Softexpert
+
+## Dependências
+
+Certifique-se de que seu ambiente atenda aos seguintes requisitos antes de executar o projeto:
+
+- **Back-end**:
+  - [Java 17](https://www.oracle.com/java/technologies/javase-downloads.html)
+
+- **Front-end**:
+  - [Node.js 18](https://nodejs.org/)
+  - [npm 9](https://www.npmjs.com/)
 
 ## Backend
 

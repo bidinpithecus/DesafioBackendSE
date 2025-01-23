@@ -30,11 +30,6 @@ public class OrderAndPaymentController {
         @Valid @RequestBody OrderAndPaymentRequestDTO request
     ) {
         try {
-            for (Discount discount : request.getDiscounts()) {
-                System.out.println(
-                    discount.getType().toString() + "; " + discount.getAmount()
-                );
-            }
             PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO(
                 orderService
                     .split(
