@@ -3,6 +3,7 @@ package com.bidin.desafio_backend_softexpert.dto;
 import java.util.Optional;
 
 public class PaymentResponseDTO {
+
     private final String name;
     private final double amount;
     private String pixLink;

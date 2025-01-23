@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class PaymentProviderFactory {
+
     @Value("${payment.provider}")
     private String paymentProviderType;
 
@@ -39,9 +40,20 @@ public class PaymentProviderFactory {
                 return new MercadoPagoProvider(mercadoPagoAccessToken);
             }
             case ITAU -> {
-                return new ItauProvider(itauPaymentEndpoint, new ItauTokenManager(itauTokenEndpoint, itauClientId, itauClientSecret, this.restTemplate), this.restTemplate);
+                return new ItauProvider(
+                    itauPaymentEndpoint,
+                    new ItauTokenManager(
+                        itauTokenEndpoint,
+                        itauClientId,
+                        itauClientSecret,
+                        this.restTemplate
+                    ),
+                    this.restTemplate
+                );
             }
-            default -> throw new IllegalArgumentException("Método de pagamento não suportado: " + this.paymentProviderType);
+            default -> throw new IllegalArgumentException(
+                "Método de pagamento não suportado: " + this.paymentProviderType
+            );
         }
     }
 }

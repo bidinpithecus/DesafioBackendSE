@@ -1,6 +1,7 @@
 package com.bidin.desafio_backend_softexpert.model;
 
 public class Addition {
+
     private CostType type;
     private double amount;
 
@@ -28,7 +29,7 @@ public class Addition {
     public double calculate(double total) {
         if (this.type == CostType.FIXED) {
             return this.amount;
-        } else if (this.type == CostType.PERCENTAGE){
+        } else if (this.type == CostType.PERCENTAGE) {
             return (total * (this.amount / 100.0));
         }
 

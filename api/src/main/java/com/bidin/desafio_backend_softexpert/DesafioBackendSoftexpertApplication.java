@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DesafioBackendSoftexpertApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DesafioBackendSoftexpertApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(DesafioBackendSoftexpertApplication.class, args);
+    }
 }

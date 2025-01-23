@@ -6,24 +6,30 @@ import com.bidin.desafio_backend_softexpert.model.Item;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class OrderRequestDTO {
+
     @NotNull(message = "Itens não pode ser vazio")
     @NotEmpty(message = "Itens não pode ser vazio")
     @Valid
     private final Map<String, @Valid List<@Valid Item>> items;
+
     @NotNull(message = "Itens não pode ser vazio")
     @NotEmpty(message = "Itens não pode ser vazio")
     private final List<Discount> discounts;
+
     @NotNull(message = "Itens não pode ser vazio")
     @NotEmpty(message = "Itens não pode ser vazio")
     private final List<Addition> additions;
 
-    public OrderRequestDTO(Map<String, List<Item>> items, List<Discount> discounts, List<Addition> additions) {
+    public OrderRequestDTO(
+        Map<String, List<Item>> items,
+        List<Discount> discounts,
+        List<Addition> additions
+    ) {
         this.items = items;
         this.discounts = discounts;
         this.additions = additions;

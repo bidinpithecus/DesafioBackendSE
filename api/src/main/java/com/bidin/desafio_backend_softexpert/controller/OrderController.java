@@ -12,17 +12,22 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class OrderController {
+
     @Autowired
     private OrderService orderService;
 
     @PostMapping("/split")
-    public ResponseEntity<OrderResponseDTO> split(@Valid @RequestBody OrderRequestDTO request) {
+    public ResponseEntity<OrderResponseDTO> split(
+        @Valid @RequestBody OrderRequestDTO request
+    ) {
         try {
-            return new ResponseEntity<>(orderService.split(request), HttpStatus.OK);
+            return new ResponseEntity<>(
+                orderService.split(request),
+                HttpStatus.OK
+            );
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

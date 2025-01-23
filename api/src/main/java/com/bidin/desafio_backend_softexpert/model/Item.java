@@ -4,8 +4,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 public class Item {
+
     @NotBlank(message = "Nome não deve ser vazio")
     private String name;
+
     @Positive(message = "Preço deve ser um valor positivo não nulo")
     private double price;
 

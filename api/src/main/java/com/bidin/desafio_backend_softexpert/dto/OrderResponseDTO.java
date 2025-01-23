@@ -3,6 +3,7 @@ package com.bidin.desafio_backend_softexpert.dto;
 import java.util.Map;
 
 public class OrderResponseDTO {
+
     private Map<String, Double> shares;
 
     public OrderResponseDTO(Map<String, Double> shares) {
