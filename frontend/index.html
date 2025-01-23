@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Teste de Pagamento</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <h1>Geração de Pagamento</h1>
+        <form id="payment-form">
+            <div id="participants">
+                <div class="participant">
+                    <label for="participant-1">Nome do Participante:</label>
+                    <input
+                        type="text"
+                        class="participant-name"
+                        name="participant-1-name"
+                        value="Voce"
+                        placeholder="Nome do Participante"
+                    />
+                    <label for="items-1">Itens:</label>
+                    <input
+                        type="text"
+                        class="items-input"
+                        name="participant-1-items"
+                        value="Hamburguer-40.00,Sobremesa-2.00"
+                        placeholder="Exemplo: Hamburguer-40.00,Sobremesa-2.00"
+                    />
+                    <button type="button" class="remove-participant">
+                        Remover Participante
+                    </button>
+                </div>
+            </div>
+
+            <button type="button" id="add-participant">
+                Adicionar Participante
+            </button>
+
+            <div>
+                <label for="discounts"
+                    >Descontos (Separados por vírgula, formato: valor-tipo (tipo
+                    pode ser apenas "FIXED" ou "PERCENTAGE")):</label
+                >
+                <input
+                    type="text"
+                    id="discounts"
+                    name="discounts"
+                    placeholder="Exemplo: 20.00-FIXED"
+                    value="20.00-FIXED"
+                />
+            </div>
+            <div>
+                <label for="additions"
+                    >Adicionais (Separados por vírgula, formato: valor-tipo
+                    (tipo pode ser apenas "FIXED" ou "PERCENTAGE")):</label
+                >
+                <input
+                    type="text"
+                    id="additions"
+                    name="additions"
+                    placeholder="Exemplo: 8.00-FIXED"
+                    value="8.00-FIXED"
+                />
+            </div>
+            <div>
+                <label for="ownerName">Nome do Proprietário:</label>
+                <input
+                    type="text"
+                    id="ownerName"
+                    name="ownerName"
+                    value="Voce"
+                    placeholder="Exemplo: Voce"
+                />
+            </div>
+            <div>
+                <label for="ownerPixKey">Chave Pix do Proprietário:</label>
+                <input
+                    type="text"
+                    id="ownerPixKey"
+                    name="ownerPixKey"
+                    value="12345678900"
+                    placeholder="Exemplo: 12345678900"
+                />
+            </div>
+            <button type="submit">Gerar Link de Pagamento</button>
+        </form>
+
+        <h2>Resposta:</h2>
+        <pre id="response-output"></pre>
+
+        <script src="script.js"></script>
+    </body>
+</html>
