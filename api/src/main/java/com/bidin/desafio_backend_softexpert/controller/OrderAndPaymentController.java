@@ -1,10 +1,8 @@
 package com.bidin.desafio_backend_softexpert.controller;
 
 import com.bidin.desafio_backend_softexpert.dto.*;
-import com.bidin.desafio_backend_softexpert.service.PaymentService;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,9 +17,6 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/api")
 public class OrderAndPaymentController {
-
-    @Autowired
-    private PaymentService paymentService;
 
     @Autowired
     private RestTemplate restTemplate;
