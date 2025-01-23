@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.bidin.desafio_backend_softexpert.utilities.Math.round;
+
 @Service
 public class OrderService {
     private Order convertToDomain(OrderRequestDTO request) {
@@ -28,7 +30,7 @@ public class OrderService {
 
         double percentageOverTotalCost = calculateTotalOrder(request) / calculateRawTotal(request);
 
-        request.getItems().forEach((name, items) -> shares.put(name, items.stream().mapToDouble(Item::getPrice).sum() * percentageOverTotalCost));
+        request.getItems().forEach((name, items) -> shares.put(name, round(items.stream().mapToDouble(Item::getPrice).sum() * percentageOverTotalCost, 2)));
 
         return new OrderResponseDTO(shares);
     }

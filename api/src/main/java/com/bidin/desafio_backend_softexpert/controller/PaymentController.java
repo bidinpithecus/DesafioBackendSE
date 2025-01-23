@@ -3,6 +3,7 @@ package com.bidin.desafio_backend_softexpert.controller;
 import com.bidin.desafio_backend_softexpert.dto.PaymentRequestDTO;
 import com.bidin.desafio_backend_softexpert.dto.PaymentResponseDTO;
 import com.bidin.desafio_backend_softexpert.service.PaymentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/generate-links")
-    public ResponseEntity<List<PaymentResponseDTO>> generateLinks(@RequestBody PaymentRequestDTO request) {
+    public ResponseEntity<List<PaymentResponseDTO>> generateLinks(@Valid @RequestBody PaymentRequestDTO request) {
         try {
             List<PaymentResponseDTO> response = new ArrayList<>(2);
 

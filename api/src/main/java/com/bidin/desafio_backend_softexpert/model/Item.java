@@ -1,7 +1,12 @@
 package com.bidin.desafio_backend_softexpert.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 public class Item {
+    @NotBlank(message = "Nome não deve ser vazio")
     private String name;
+    @Positive(message = "Preço deve ser um valor positivo não nulo")
     private double price;
 
     public Item(String name, double price) {

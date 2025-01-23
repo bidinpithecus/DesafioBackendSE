@@ -108,6 +108,23 @@ class OrderServiceTest {
     }
 
     @Test
+    void testSplit_ZeroCostAddition() {
+        Map<String, List<Item>> items = new HashMap<>();
+        items.put("Voce", List.of(new Item("Pizza", 50.00)));
+        items.put("Amigo", Arrays.asList(new Item("Burger", 30.00), new Item("Fries", 20.00)));
+
+        List<Discount> discounts = List.of();
+        List<Addition> additions = List.of(new Addition(CostType.FIXED, 0.00));
+
+        OrderRequestDTO request = new OrderRequestDTO(items, discounts, additions);
+
+        OrderResponseDTO response = orderService.split(request);
+
+        assertEquals(50.00, response.getShares().get("Voce"), 0.01);
+        assertEquals(50.00, response.getShares().get("Amigo"), 0.01);
+    }
+
+    @Test
     void testSplit_ExtremeValues() {
         Map<String, List<Item>> items = new HashMap<>();
         items.put("Voce", List.of(new Item("Luxury Item", 1_000_000.00)));
