@@ -19,7 +19,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @PostMapping("/generate-links")
+    @PostMapping("/test/generate-links")
     public ResponseEntity<List<PaymentResponseDTO>> generateLinks(
         @Valid @RequestBody PaymentRequestDTO request
     ) {

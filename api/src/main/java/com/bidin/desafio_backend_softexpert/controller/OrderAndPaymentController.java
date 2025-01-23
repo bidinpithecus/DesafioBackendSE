@@ -1,72 +1,70 @@
 package com.bidin.desafio_backend_softexpert.controller;
 
 import com.bidin.desafio_backend_softexpert.dto.*;
+import com.bidin.desafio_backend_softexpert.service.OrderService;
+import com.bidin.desafio_backend_softexpert.service.PaymentService;
 import jakarta.validation.Valid;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequestMapping("/api")
 public class OrderAndPaymentController {
 
     @Autowired
-    private RestTemplate restTemplate;
+    private OrderService orderService;
 
-    @PostMapping("/split-and-generate-links")
-    public ResponseEntity<?> splitAndGenerateLinks(
+    @Autowired
+    private PaymentService paymentService;
+
+    @PostMapping("/split")
+    public ResponseEntity<List<PaymentResponseDTO>> splitAndGenerateLinks(
         @Valid @RequestBody OrderAndPaymentRequestDTO request
     ) {
         try {
-            ResponseEntity<OrderResponseDTO> orderResponse;
-            try {
-                orderResponse = restTemplate.exchange(
-                    "http://localhost:8080/api/split",
-                    HttpMethod.POST,
-                    new HttpEntity<>(
+            PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO(
+                orderService
+                    .split(
                         new OrderRequestDTO(
                             request.getItems(),
                             request.getDiscounts(),
                             request.getAdditions()
                         )
-                    ),
-                    OrderResponseDTO.class
-                );
-            } catch (HttpClientErrorException.BadRequest e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    e.getResponseBodyAsString()
-                );
-            }
-
-            if (orderResponse.getStatusCode() != HttpStatus.OK) {
-                return ResponseEntity.status(
-                    HttpStatus.INTERNAL_SERVER_ERROR
-                ).build();
-            }
-
-            PaymentRequestDTO paymentRequest = new PaymentRequestDTO(
-                Objects.requireNonNull(orderResponse.getBody()).getShares(),
+                    )
+                    .getShares(),
                 request.getOwnerName(),
                 request.getOwnerPixKey()
             );
 
-            ResponseEntity<List<PaymentResponseDTO>> paymentResponse =
-                restTemplate.exchange(
-                    "http://localhost:8080/api/generate-links",
-                    HttpMethod.POST,
-                    new HttpEntity<>(paymentRequest),
-                    new ParameterizedTypeReference<>() {}
-                );
+            List<PaymentResponseDTO> response = new ArrayList<>(2);
 
-            return paymentResponse;
+            paymentRequestDTO
+                .getShares()
+                .forEach((name, value) -> {
+                    PaymentResponseDTO user = new PaymentResponseDTO(
+                        name,
+                        value
+                    );
+                    if (!name.equals(request.getOwnerName())) {
+                        var paymentInfo = paymentService.generateLink(
+                            "Sua fatia",
+                            new BigDecimal(value),
+                            request.getOwnerPixKey()
+                        );
+                        user.setPixLink(paymentInfo._1());
+                        user.setQrCodeBase64(paymentInfo._2());
+                    }
+                    response.add(user);
+                });
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(

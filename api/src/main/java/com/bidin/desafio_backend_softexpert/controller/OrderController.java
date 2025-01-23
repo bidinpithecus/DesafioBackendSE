@@ -16,7 +16,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/split")
+    @PostMapping("/test/split")
     public ResponseEntity<OrderResponseDTO> split(
         @Valid @RequestBody OrderRequestDTO request
     ) {

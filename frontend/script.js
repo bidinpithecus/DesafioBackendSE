@@ -88,16 +88,13 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       try {
-        const response = await fetch(
-          "http://localhost:8080/api/split-and-generate-links",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
+        const response = await fetch("http://localhost:8080/api/split", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+          body: JSON.stringify(requestData),
+        });
 
         if (response.ok) {
           const result = await response.json();
