@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
             );
             allowedValues = allowedValues
                 .replaceAll("[\\[\\]]", "")
-                .replaceAll(",", ""); // Formata a string
+                .replaceAll(",", "");
             error.put(
                 "error",
                 "Valor inválido: apenas " + allowedValues + " são permitidos."
